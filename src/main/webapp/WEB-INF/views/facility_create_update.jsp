@@ -46,19 +46,23 @@ pageEncoding="ISO-8859-1"%>
 						</div>
 						<div class="input-group mb-3">
 							<form:input type="text" path="facilityName" class="form-control" aria-label="facility-name" aria-describedby="InputGroup-sizing-default" placeholder="Facility Name"
-							/>
+							required="required"/>
 						</div>
 						
 						<div class="input-group mb-3">
-							<form:input type="text" class="form-control" path="address" aria-label="facility-address" aria-describedby="InputGroup-sizing-default" placeholder="Facility Address"
+							<form:input type="text" class="form-control" path="address" 
+							aria-label="facility-address" aria-describedby="InputGroup-sizing-default" 
+							placeholder="Facility Address" required="required"
 							/>
 						</div>
 						<div class="input-group mb-3">
-							<form:textarea class="form-control" path="Description" rows="3" cols="50" aria-label="facility-description" aria-describedby="InputGroup-sizing-default" placeholder="Facility Desription"/>
+							<form:textarea class="form-control" path="Description" 
+							rows="3" cols="50" aria-label="facility-description" 
+							aria-describedby="InputGroup-sizing-default" required="required" placeholder="Facility Desription"/>
 						</div>
 
 						<div class="input-group mb-3">
-							<form:textarea class="form-control" path="damageReason" rows="3" aria-label="Damage Reason" aria-describedby="InputGroup-sizing-default"  placeholder="Damage Report"/>
+							<form:textarea class="form-control" required="required" path="damageReason" rows="3" aria-label="Damage Reason" aria-describedby="InputGroup-sizing-default"  placeholder="Damage Report"/>
 						</div>
 
 						<div class="form-check mb-3">
