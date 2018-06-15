@@ -14,17 +14,17 @@ public interface BookingService {
 
 	//Screen Booking-create-update
 	Booking updateBooking(Booking booking);
-	List<Booking> findBookingByMember(int fID, Date start, Date end);
+	
 	List<Booking> findBookingByAdmin(int fID, Date start, Date end, String uID);
 	
 	boolean checkFacilityAvailability(int fID, Date start, Date end);
-
-
+	
 	List<Booking> displayAll();
 
 	ArrayList<Date> findUnavailableDates(int fid);
 
 	boolean isBookingClash(int fid, Date startDate, Date endDate);
+	
 	List<Integer> findAllFacilityID();
 
 	Booking findBookingByID(int ID);
@@ -34,8 +34,7 @@ public interface BookingService {
 	List<Booking> findAllBooking();
 
 	List<Booking> findBookingByTypeName(String typeName, Date start, Date end, String uID);
-
-
+	
 	boolean checkFacilityAvailability(Facility f, Date start, Date end);
 
 }

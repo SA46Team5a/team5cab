@@ -17,22 +17,25 @@
 <body>
 	<cab:nav /> 
     <!--End of template-->
-
     <h1 style="text-align: center;">Create Booking</h1>
     <hr>
     <div class="container">
         <div class="card mt-5">
-            <form:form action="team5cab/admin/booking/create/" method="post" class="col-12 card-body" modelAttribute="booking">
+            <c:if test="${param.bookingWarning==\"true\"}">
+            	<div class="alert alert-danger" role="alert">
+			 	Sorry! The dates you selected have an existing booking.Please try for other dates!
+			</div>
+            </c:if>
+            <form:form action="team5cab/${sessionScope.role}/booking/create" method="post" class="col-12 card-body" modelAttribute="booking">
                 <div class="input-group mb-3">
                     <form:hidden path="facility.facilityID" />
                     <input type="text" class="form-control" name="facilityName" value="${booking.facility.facilityName}" disabled />
                     <form:hidden path="users.userID" />
-                    <c:if test="${sessionScope.role ==\"admin\"}" >
+                    <c:if test="${sessionScope.role ==\"Admin\"}" >
                      	 <label class="form-check-label ml-5 pt-1">
                         <form:checkbox path="isUnderMaintenance" class="form-check-input" value=""/>For Maintenance
                     	</label>	
                     </c:if>
-                 
                 </div>
                 <div class="form-row justify-content-center date input-daterange mb-3 form-inline" data-provide="datepicker">
                     <form:input type="text" class="form-control" id="startDate" placeholder="Choose Start Date" path="startDate"/>
@@ -42,8 +45,7 @@
                 <div class="text-center">
                     <button id="submit" type="submit" class="btn btn-primary mb-3">Book</button>
                 </div>
-                <div class="text-center">
-					<p>${message}</p>                
+                <div class="text-center">             
                 </div> 
             </form:form>
         </div>

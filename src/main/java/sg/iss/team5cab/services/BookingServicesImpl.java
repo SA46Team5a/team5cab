@@ -62,12 +62,8 @@ public class BookingServicesImpl implements BookingService {
 	/* (non-Javadoc)
 	 * @see sg.iss.team5cab.services.BookingService#findBookingByMember(int, java.time.LocalDate, java.time.LocalDate)
 	 */
-	@Transactional
-	@Override
-	public List<Booking> findBookingByMember(int fID,Date start,Date end)
-	{
-		 return bRepo.findBookingDatesForMember(start,end, fID);
-	}
+
+
 	
 	/* (non-Javadoc)
 	 * @see sg.iss.team5cab.services.BookingService#deleteBooking(int, java.time.LocalDate, java.time.LocalDate, java.lang.String)
@@ -183,15 +179,23 @@ public class BookingServicesImpl implements BookingService {
 	@Override
 	@Transactional
 	public boolean isBookingClash(int fid, Date startDate, Date endDate) {
-		ArrayList<Booking> listOfBookingsByFid = (ArrayList<Booking>)bRepo.findBookingsByFacilityID(fid); 
-		for (Date date = startDate; date.before(endDate); date = CABDate.plusDays(date, 1)) {
-			for (Booking b : listOfBookingsByFid) {
-				if(date.before(b.getEndDate()) && date.after(b.getStartDate())){
-					return true;
-				}
-			}
-		}
-		return false;
+
+		Facility searchFacility = fRepo.findOne(fid);
+		ArrayList<Booking> existingBookingBetweenStartAndEnd = 
+				bRepo.findBookingsBetweenStartAndEndDateInclusiveByFacility(startDate, endDate, searchFacility);
+		
+		
+		return existingBookingBetweenStartAndEnd.size()==0 ? false : true;
+			
+//		ArrayList<Booking> listOfBookingsByFid = (ArrayList<Booking>)bRepo.findBookingsByFacilityID(fid); 
+//		for (Date date = startDate; date.before(endDate); date = CABDate.plusDays(date, 1)) {
+//			for (Booking b : listOfBookingsByFid) {
+//				if(date.before(b.getEndDate()) && date.after(b.getStartDate())){
+//					return true;
+//				}
+//			}
+//		}
+//		return false;
 	}
 
 	@Override

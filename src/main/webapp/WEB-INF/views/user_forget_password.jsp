@@ -24,11 +24,18 @@
 					</div>
 					<div class="card-body">
 						<form:form method="post" 
-							action="team5cab/public/forgetpassword" modelAttribute="Users">
+							action="team5cab/public/changepassword" modelAttribute="Users">
 							<div class="form-group">
 								<p>New Password:</p>
-								<input name="password" required="required" type="password"
-									id="password" />
+								<form:input name="password" required="required" type="password"
+									id="password" path="password" />
+								<form:hidden path="userID"/>
+								<form:hidden path="name"/>
+								<form:hidden path="email"/>
+								<form:hidden path="address"/>
+								<form:hidden path="phoneNumber"/>
+								<form:hidden path="dob"/>
+								<form:hidden path="role"/>
 							</div>
 							<div class="form-group">
 								<p>Confirm New Password:</p>

@@ -1,6 +1,11 @@
 package sg.iss.team5cab.init;
 
+import javax.servlet.Filter;
+
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import sg.iss.team5cab.filters.AuthenticationFilter;
 
 public class Initializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -18,4 +23,6 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
 	protected String[] getServletMappings() {
 		return new String[] { "/" };
 	}
+	
+	
 }

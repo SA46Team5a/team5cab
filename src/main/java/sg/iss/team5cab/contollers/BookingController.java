@@ -29,7 +29,7 @@ import sg.iss.team5cab.services.UsersService;
 public class BookingController {
 	@Autowired
 	BookingService bService;
-; 
+
 	@Autowired
 	UsersService uService;
 	
@@ -39,8 +39,8 @@ public class BookingController {
 	@Autowired
 	FacilityServices fService;
 	
-
-	@RequestMapping(value = "/admin/booking/create/{facilityID}", method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/booking/create/{facilityID}","/member/booking/create/{facilityID}"},
+			method = RequestMethod.GET)
 	public ModelAndView newBookingPage(@PathVariable("facilityID") int facilityID,
 			HttpSession session) {
 		// get the user id from session scope
@@ -51,7 +51,7 @@ public class BookingController {
 		booking.setUsers(user);
 		Facility f = fService.findFacilityById(facilityID);
 		booking.setFacility(f);
-		
+
 		ModelAndView mav = new ModelAndView("booking-create-update", "booking", booking);
 		
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
@@ -64,51 +64,50 @@ public class BookingController {
 		return mav;
 	}
 	
-	@RequestMapping(value = {"/admin/booking/create/", "/member/booking/create"}, method = RequestMethod.POST)
+	
+
+	@RequestMapping(value = {"/admin/booking/create","/member/booking/create"} ,
+		method = RequestMethod.POST)
 	public ModelAndView newBookingPage(@ModelAttribute Booking booking,
-			HttpSession session,
-			@ModelAttribute("message") String message) {
-		// get the user id from session scope
-		//String userID = session.getAttribute("userID").toString();
+			HttpSession session)
+	{
 		
-		//mav.addObject("facility", fService.findFacilityById(id));
+		String userID = session.getAttribute("userID").toString();
+		int fid = booking.getFacility().getFacilityID();
+		Date startDate = booking.getStartDate();
+		Date endDate = booking.getEndDate();
+
 		
-		System.out.println("getstartDate");
-		System.out.println(booking.getStartDate());
-		
-		
-		System.out.println("getendDate");
-		System.out.println(booking.getEndDate());
-		
-		System.out.println("getuserID");
-		System.out.println(booking.getUsers().getUserID());
-		
-		
-		
-		if(bService.isBookingClash(booking.getFacility().getFacilityID(), booking.getStartDate(), booking.getEndDate())){
+		if(bService.isBookingClash(fid, startDate, endDate)){
 			//some error feedback
 			
-			ModelAndView mav= new ModelAndView("redirect:/admin/booking/create/${facilityID}", "booking", booking);
-			//attributes.addFlashAttribute("message","Sorry booking slot is taken! PLease try another slot!");
+			ModelAndView mav= 
+					session.getAttribute("role").equals("member")?
+					new ModelAndView("redirect:/member/booking/create/"+fid, "booking", booking):
+					new ModelAndView("booking-create-update", "booking", booking);
+			mav.addObject("bookingWarning", true);
+			mav.addObject("booking.facility.facilityID",fid);
 			return mav;
 					
 		}
 		else{
 			Facility f = fService.findFacilityById(booking.getFacility().getFacilityID());
-			String userID = session.getAttribute("userID").toString();
-			
+
+			//String userID = session.getAttribute("userID").toString();
+			//String userID = "Abraham1234";
+	
 			// Get both objects from their respective id
+
 			booking.setFacility(f);
 			booking.setUsers(uService.findUser(userID));
-			if(booking.getEndDate()==null) booking.setEndDate(booking.getStartDate());
+			if(booking.getEndDate()==null)
+				booking.setEndDate(booking.getStartDate());
 			
 			bService.createBooking(booking);
 			return new ModelAndView("booking-confirmation", "booking", booking);
 		}	
 
 	}
-	
-
 	
 	@RequestMapping(value= {"/admin/booking/search", "/member/booking/search"},method=RequestMethod.GET)
 	public ModelAndView createSearchPage()
@@ -122,13 +121,31 @@ public class BookingController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/admin/booking/search",method=RequestMethod.POST)
-	public ModelAndView displaySearchResult(@ModelAttribute("booking") Booking booking)
+	@RequestMapping(value= {"/admin/booking/search","/member/booking/search"}, method=RequestMethod.POST)
+	public ModelAndView displaySearchResult(@ModelAttribute("booking") Booking booking,HttpSession session )
 	{
+		
 		ModelAndView mav=new ModelAndView();
-		List<Booking> listBookings=bService.findBookingByTypeName(booking.getFacility().getFacilityType().getTypeName(), booking.getStartDate(), booking.getEndDate(), booking.getUsers().getUserID());
+		List<Booking> listBookings=null;
+		if(session.getAttribute("role").equals("member"))
+		{
+			listBookings=bService.findBookingByTypeName(booking.getFacility().getFacilityType().getTypeName(), booking.getStartDate(), booking.getEndDate(), session.getAttribute("userID").toString());
+		}
+		else if(session.getAttribute("role").equals("admin"))
+		{	
+			listBookings=bService.findBookingByTypeName(booking.getFacility().getFacilityType().getTypeName(), booking.getStartDate(), booking.getEndDate(), booking.getUsers().getUserID());
+		}	
+		
 		mav.addObject("bookings",listBookings);
 		mav.addObject("listOfTypeName",ftService.findAllType());
+		mav.setViewName("booking-search");
+		return mav;
+	}
+	
+	@RequestMapping(value="/member/booking/search",method=RequestMethod.POST)
+	public ModelAndView displayMemberSearchResult(@ModelAttribute("booking") Booking booking)
+	{
+		ModelAndView mav=new ModelAndView();
 		mav.setViewName("booking-search");
 		return mav;
 	}

@@ -18,7 +18,7 @@
 		</a>
 
 		<div class="dropdown-menu" aria-labelledby="bookingDropdown">
-		<a class="dropdown-item" href="/team5cab/member/booking/create">Make Booking</a>
+		<a class="dropdown-item" href="/team5cab/member/facility/search">Make Booking</a>
 		<a class="dropdown-item" href="/team5cab/member/booking/search">Manage Bookings</a>
 		</div>
 	</li>
