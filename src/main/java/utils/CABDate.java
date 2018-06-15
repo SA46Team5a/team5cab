@@ -11,9 +11,10 @@ import java.util.Date;
 public class CABDate {
 	public static Date getToday() {
 		Calendar today = Calendar.getInstance();
-		today.clear(Calendar.HOUR); 
-		today.clear(Calendar.MINUTE); 
-		today.clear(Calendar.SECOND);
+		today.set(Calendar.HOUR, 0); 
+		today.set(Calendar.MINUTE, 0); 
+		today.set(Calendar.SECOND, 0);
+		today.set(Calendar.MILLISECOND, 0);
 		return today.getTime();
 	}
 	
