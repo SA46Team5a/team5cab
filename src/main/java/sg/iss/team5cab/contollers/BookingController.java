@@ -1,20 +1,21 @@
 package sg.iss.team5cab.contollers;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import sg.iss.team5cab.model.Booking;
 import sg.iss.team5cab.model.Facility;
@@ -52,7 +53,14 @@ public class BookingController {
 		booking.setFacility(f);
 		
 		ModelAndView mav = new ModelAndView("booking-create-update", "booking", booking);
-		mav.addObject("availableDateList", bService.findUnavailableDates(facilityID));
+		
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		List<String> dateStrings= new ArrayList<String>();
+		for (Date date : bService.findUnavailableDates(facilityID)) {
+			 dateStrings.add(df.format(date));
+		}
+		String dateString = StringUtils.collectionToDelimitedString(dateStrings, ",");
+		mav.addObject("availableDateList", dateString);
 		return mav;
 	}
 	

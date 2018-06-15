@@ -222,14 +222,12 @@ public class BookingServicesImpl implements BookingService {
 	public ArrayList<Date> BookingDatesToDateList(List<Booking> bookings) {
 		ArrayList<Date> dates = new ArrayList<Date>();
 		for (Booking b : bookings) {
-			System.out.println(b);
 			Date date = b.getStartDate();
 			do {
 				dates.add(date);
 				date = CABDate.plusDays(date,  1);
 			} 
 			while(!date.after(b.getEndDate()));
-			System.out.println(dates);
 		}
 		return dates;
 	}

@@ -22,7 +22,7 @@
     <hr>
     <div class="container">
         <div class="card mt-5">
-            <form:form action="team5cab/admin/booking/create/{facility.facilityID}" method="post" class="col-12 card-body" modelAttribute="booking">
+            <form:form action="team5cab/admin/booking/create/" method="post" class="col-12 card-body" modelAttribute="booking">
                 <div class="input-group mb-3">
                     <form:hidden path="facility.facilityID" />
                     <input type="text" class="form-control" name="facilityName" value="${booking.facility.facilityName}" disabled />
@@ -34,37 +34,85 @@
                     </c:if>
                  
                 </div>
-                <div class="input-group date input-daterange mb-3" data-provide="datepicker">
-                    <form:input type="text" class="form-control" id="booking-start" placeholder="Choose Start Date" path="startDate"/>
-                    <div class="input-group-addon">to</div>
-                    <form:input type="text" class="form-control" id="booking-end" placeholder="Choose End Date" path="endDate" />
+                <div class="form-row justify-content-center date input-daterange mb-3 form-inline" data-provide="datepicker">
+                    <form:input type="text" class="form-control" id="startDate" placeholder="Choose Start Date" path="startDate"/>
+                    <div class="input-group-addon col-1 text-center">to</div>
+                    <form:input type="text" class="form-control" id="endDate" placeholder="Choose End Date" path="endDate" />
                 </div>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary mb-3">Book</button>
+                    <button id="submit" type="submit" class="btn btn-primary mb-3">Book</button>
                 </div>
                 <div class="text-center">
 					<p>${message}</p>                
                 </div> 
             </form:form>
- 			
- 			
         </div>
-
+		<input hidden type="text" id="dateList" value=<c:out value="${availableDateList}" /> />
     </div>
 </body>
 
-<script>
-var dateToday = new Date();
-var dates = $("#booking-start, #booking-start").datepicker({
-    defaultDate: "+1w",
-    changeMonth: true,
-    numberOfMonths: 3,
-    minDate: dateToday,
-    onSelect: function(selectedDate) {
-        var option = this.id == "from" ? "minDate" : "maxDate",
-            instance = $(this).data("datepicker"),
-            date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
-        dates.not(this).datepicker("option", option, date);
-    }
-});
-</script>
+    <script>
+        var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+        var maxDate = new Date();
+        maxDate.setDate(today.getDate() + 7);
+        var dateList = $('#dateList').val().split(",");
+        
+        function padLeft(num, size) {
+            var s = num+"";
+            while (s.length < size) s = "0" + s;
+            return s;
+        }
+        
+        function stringToDate(str) {
+        	var dateArray = new Array();
+        	str.split("/").forEach(function (s) {
+        		dateArray.push(parseInt(s));	
+        	});
+        	// Date in MM/dd/yyyy format
+        	var x = new Date(
+				dateArray[2],
+				dateArray[0] - 1,
+				dateArray[1],
+				0,0,0,0
+        	);
+        	return x;
+        }
+        
+        function dateToString(date) {
+        	return padLeft(date.getMonth() + 1,2) + "/" + padLeft(date.getDate() ,2) + "/" + date.getFullYear();
+        }
+        
+        function getMaxDate() {
+        	var dateString = $('#startDate').val();
+        	var cDate = stringToDate(dateString);
+        	do  {
+        		cDate.setDate(cDate.getDate() + 1);
+        		dateString = dateToString(cDate);
+        	} while (dateList.indexOf(dateString) == -1 && cDate.getTime() < maxDate.getTime());
+        	console.log(dateString);
+        	return dateString;
+        }	
+        
+        $('#startDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: today,
+            maxDate: maxDate,
+            disableDates:
+            	dateList
+        });
+        
+        $('#startDate').change( function () {
+        	$('#endDate').val($('#startDate').val());
+        });
+
+        $('#endDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: today,
+ 			maxDate: maxDate,
+ 			disableDates:
+            	dateList
+        });
+
+    </script>
