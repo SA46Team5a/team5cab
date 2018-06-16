@@ -9,19 +9,7 @@
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
   <cab:headImports />
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-  $( function() {
-	    $( "#datepicker" ).datepicker({ minDate: -"200M", maxDate: "+0D" });
-	  } );
-	  </script>
-
-
-
 <title>Registration</title>
 </head>
 <body>
@@ -115,9 +103,9 @@
 								</div>
 								
 							</div>
-							<div class="col-6 col-sm-4 mb-3">
+							<div class="col-6 col-sm-4 mb-3" data-provide="datepicker">
 							     <label>Date of Birth</label></br>
-								 <form:input type="text"  class="form-control" id="datepicker" path="dob"/>
+								<form:input type="text" class="form-control" id="birthday" placeholder="Choose Start Date" path="dob"/>
 							</div>
 
 						</div>
@@ -237,4 +225,5 @@
                             
                           
 </body>
+<script><%@include file="/WEB-INF/js/birthday_datepicker.js" %></script>
 </html>

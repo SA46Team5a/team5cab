@@ -9,11 +9,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
 <cab:headImports />
- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
   $( function() {
 	    $( "#datepicker" ).datepicker({ minDate: -"200M", maxDate: "+0D" });
@@ -82,7 +78,7 @@
 						
 					<!--  <div class="input-group date mb-3" data-provide="datepicker">	 -->				
 					<div class="input-group mb-3" >
-						<form:input type="text"  class="form-control" id="datepicker" path="dob"/>
+						<form:input type="text" class="form-control" id="birthday" placeholder="Choose Start Date" path="dob"/>
 						<div class="input-group-addon">
 							<span class="glyphicon glyphicon-th"></span>
 						</div>
@@ -120,4 +116,5 @@
 						}
                         </script>
 </body>
+<script><%@include file="/WEB-INF/js/birthday_datepicker.js" %></script>
 </html>
