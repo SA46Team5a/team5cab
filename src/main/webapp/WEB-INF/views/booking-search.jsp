@@ -42,12 +42,10 @@
                         Please select Facility Type
                     </div>
                 </div>
-                <div class="input-group mb-3 date input-daterange" data-provide="datepicker">
-                    <form:input path="startDate" type="text" class="form-control" placeholder="Choose Start Date" />
-                    <div class="input-group-addon" required="required">to</div>
-                    <form:input path="endDate" type="text" class="form-control" placeholder="Choose Start Date" required="required"/>
-                    <div id="validation-text" class="mb-3">
-                    </div>
+                <div class="form-row justify-content-center date input-daterange mb-3 form-inline" data-provide="datepicker">
+                    <form:input type="text" class="form-control" id="startDate" placeholder="Choose Start Date" path="startDate"/>
+                    <div class="input-group-addon col-1 text-center">to</div>
+                    <form:input type="text" class="form-control" id="endDate" placeholder="Choose End Date" path="endDate" />
                 </div>
                 <div class="input-group mb-3" hidden>
                     <input type="text" class="form-control" aria-label="Username" aria-describedby="InputGroup-sizing-default" placeholder="Username"
@@ -120,3 +118,4 @@
         
     </nav>
 </body>
+<script><%@include file="/WEB-INF/js/search_datepicker.js" %></script>
