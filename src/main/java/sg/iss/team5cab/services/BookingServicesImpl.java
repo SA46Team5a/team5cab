@@ -16,7 +16,7 @@ import sg.iss.team5cab.model.Booking;
 import sg.iss.team5cab.model.Facility;
 import sg.iss.team5cab.repo.BookingRepository;
 import sg.iss.team5cab.repo.FacilityRepository;
-import utils.CABDate;
+import sg.iss.team5cab.utils.CABDate;
 
 @Service
 public class BookingServicesImpl implements BookingService {

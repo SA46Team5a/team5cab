@@ -25,7 +25,7 @@ import sg.iss.team5cab.services.BookingService;
 import sg.iss.team5cab.services.FacilityServices;
 import sg.iss.team5cab.services.FacilityTypeService;
 import sg.iss.team5cab.services.UsersService;
-import utils.CABDate;
+import sg.iss.team5cab.utils.CABDate;
 
 @Controller
 public class BookingController {

@@ -13,8 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sg.iss.team5cab.model.Facility;
 import sg.iss.team5cab.model.FacilityType;
 import sg.iss.team5cab.repo.FacilityRepository;
-
-import utils.CABDate;
+import sg.iss.team5cab.utils.CABDate;
 
 
 @Service
