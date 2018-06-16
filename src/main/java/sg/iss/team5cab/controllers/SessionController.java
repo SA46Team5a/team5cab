@@ -1,4 +1,4 @@
-package sg.iss.team5cab.contollers;
+package sg.iss.team5cab.controllers;
 
 import java.awt.Component;
 

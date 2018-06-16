@@ -1,4 +1,4 @@
-package sg.iss.team5cab.contollers;
+package sg.iss.team5cab.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
