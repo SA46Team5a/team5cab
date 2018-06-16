@@ -37,13 +37,10 @@ pageEncoding="ISO-8859-1"%>
 				<label class="form-check-label"/>
 			</div>
 
-			<div class="input-group mb-3 date input-daterange"
-				data-provide="datepicker">
-				<form:input path="startDate" type="text" class="form-control" name="startDate"
-					placeholder="Choose Start Date"/>
-				<div class="input-group-addon">to</div>
-				<form:input path="endDate" type="text" class="form-control" name="endDate"
-					placeholder="Choose End Date"/>
+			<div class="form-row justify-content-center date input-daterange mb-3 form-inline" data-provide="datepicker">
+				<form:input type="text" class="form-control" id="startDate" placeholder="Choose Start Date" path="startDate"/>
+				<div class="input-group-addon col-1 text-center">to</div>
+				<form:input type="text" class="form-control" id="endDate" placeholder="Choose End Date" path="endDate" />
 			</div>
 			<div class="form-check mb-3">
 			<c:if test="${sessionScope.role==\"admin\"}">
@@ -127,4 +124,5 @@ pageEncoding="ISO-8859-1"%>
 		</div>
 	</div>
 </body>
+<script><%@include file="/WEB-INF/js/search_datepicker.js" %></script>
 </html>
