@@ -173,6 +173,23 @@ public class BookingServicesImpl implements BookingService {
 		return BookingDatesToDateList(bookings);
 	}	
 	
+	@Override
+	@Transactional
+	public ArrayList<Date> findUnavailableDatesExcludingBookingID(int bookingID) {
+		Booking b = bRepo.findOne(bookingID);
+		Facility f = fRepo.findOne(b.getFacility().getFacilityID());
+		Date today= CABDate.getToday();
+		Date end = CABDate.plusDays(today, 7);
+		ArrayList<Booking> bookings = bRepo.findBookingsBetweenStartAndEndDateInclusiveByFacility(today, end, f);
+		
+		ArrayList<Booking> returnList = new ArrayList<Booking>();
+		for (Booking booking : bookings) {
+			if (booking.getBookingID() != bookingID) 
+				returnList.add(booking);
+		}
+		return BookingDatesToDateList(returnList);
+	}
+	
 	/* (non-Javadoc)
 	 * @see sg.iss.team5cab.services.BookingService#isBookingClash(int, java.time.LocalDate, java.time.LocalDate)
 	 */

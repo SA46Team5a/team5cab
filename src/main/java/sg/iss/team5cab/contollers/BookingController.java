@@ -157,7 +157,7 @@ public class BookingController {
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		List<String> dateStrings= new ArrayList<String>();
 
-		for (Date date : bService.findUnavailableDates(booking.getFacility().getFacilityID())) {
+		for (Date date : bService.findUnavailableDatesExcludingBookingID(bookingID)) {
 			dateStrings.add(df.format(date));
 		}
 		String dateString = StringUtils.collectionToDelimitedString(dateStrings, ",");
@@ -171,30 +171,20 @@ public class BookingController {
     public ModelAndView editBookingConfirmation(@ModelAttribute("booking") Booking updatedBooking,final RedirectAttributes redirectAttributes)
 
     {
-		
 		Booking oldBooking=bService.findBookingByID(updatedBooking.getBookingID());
 		oldBooking.setStartDate(updatedBooking.getStartDate());
 		oldBooking.setEndDate(updatedBooking.getEndDate());
-		String message="Booking clash found.";
 		if(bService.isBookingClash(oldBooking.getFacility().getFacilityID(), oldBooking.getStartDate(), oldBooking.getEndDate()))
 		{
-//			System.out.println(oldBooking);
-//			System.out.println("######################################");
-//			System.out.println(bService.isBookingClash(oldBooking.getFacility().getFacilityID(), oldBooking.getStartDate(), oldBooking.getEndDate()));
-//			System.out.println("####################################");
-			
-			ModelAndView mav=new ModelAndView("booking-edit","booking",updatedBooking);
-			mav.addObject("error","Booking clash has been found,please choose another date");
+			ModelAndView mav=new ModelAndView("redirect:/admin/booking/edit/" + oldBooking.getBookingID());
+			mav.addObject("bookingWarning", true);
 			return mav;
 		}
 		else
 		{
-			System.out.println("@!@!@!@!@@!@!@!@!@!@!@!@!@@!");
-		
-    	ModelAndView mav =new ModelAndView("booking-confirmation", "booking", bService.updateBooking(oldBooking));
-       	return mav;
+			ModelAndView mav =new ModelAndView("booking-confirmation", "booking", bService.updateBooking(oldBooking));
+			return mav;
 		}
-		
     }
 	
 	@RequestMapping(value="/admin/booking/delete/{bookingID}",method=RequestMethod.GET)

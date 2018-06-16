@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="cab" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html5 PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,7 +12,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <cab:headImports />
-</head>
 
 <body>
 	<cab:nav /> 
@@ -22,6 +21,11 @@
     <hr>
     <div class="container">
         <div class="card mt-5">
+			<c:if test="${param.bookingWarning==\"true\"}">
+            	<div class="alert alert-danger" role="alert">
+					 Sorry! The dates you selected are already booked. Please try for other dates!
+				</div>
+            </c:if>
             <form:form action="team5cab/admin/booking/edit" method="post" modelAttribute="booking" class="col-12 card-body">
                 <div class="input-group mb-3">
                 	
@@ -39,9 +43,7 @@
                 <div class="text-center">
                     <input type="submit" class="btn btn-primary mb-3" value="Update">
                 </div>
-                <c:if test="${not empty error}">
-                <div class="alert alert-success" >"${error}"</div>
-                </c:if>
+
             </form:form>
         </div>
 		<input hidden type="text" id="dateList" value="${availableDateList}" />

@@ -23,6 +23,8 @@ public interface BookingService {
 
 	ArrayList<Date> findUnavailableDates(int fid);
 
+	ArrayList<Date> findUnavailableDatesExcludingBookingID(int bookingID);
+
 	boolean isBookingClash(int fid, Date startDate, Date endDate);
 	
 	List<Integer> findAllFacilityID();
@@ -36,5 +38,4 @@ public interface BookingService {
 	List<Booking> findBookingByTypeName(String typeName, Date start, Date end, String uID);
 	
 	boolean checkFacilityAvailability(Facility f, Date start, Date end);
-
 }
