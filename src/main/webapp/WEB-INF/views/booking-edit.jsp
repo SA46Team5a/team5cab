@@ -27,20 +27,20 @@
                     <input value="${booking.facility.facilityName}" type="text" class="form-control" aria-label="Facility Name" aria-describedby="InputGroup-sizing-default" 
                         disabled/>
                         <form:hidden path="bookingID" />
-					<input path="bookingID" type="text" class="form-control" aria-label="Facility Name" aria-describedby="InputGroup-sizing-default" 
+					<input type="text" class="form-control" aria-label="Facility Name" aria-describedby="InputGroup-sizing-default" 
                         disabled value="BookingID:${booking.bookingID}" />
                 </div>
-                <div class="input-group date input-daterange mb-3" data-provide="datepicker">
-                    <form:input path="startDate" type="text" class="form-control" id="booking-start" placeholder="Choose Start Date"/>
-                    <div class="input-group-addon">to</div>
-                    <form:input path="endDate" type="text" class="form-control" id="booking-end" placeholder="Choose End Date"/>
+                <div class="form-row justify-content-center date input-daterange mb-3 form-inline" data-provide="datepicker">
+                    <form:input type="text" class="form-control" id="startDate" placeholder="Choose Start Date" path="startDate"/>
+                    <div class="input-group-addon col-1 text-center">to</div>
+                    <form:input type="text" class="form-control" id="endDate" placeholder="Choose End Date" path="endDate" />
                 </div>
                 <div class="text-center">
-                    <input type="submit" class="btn btn-primary mb-3" value="OK">
+                    <input type="submit" class="btn btn-primary mb-3" value="Update">
                 </div>
             </form:form>
         </div>
-
+		<input hidden type="text" id="dateList" value="${availableDateList}" />
     </div>
-
 </body>
+<script><%@include file="/WEB-INF/js/booking_datepicker.js" %></script>

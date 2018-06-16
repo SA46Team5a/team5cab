@@ -24,13 +24,12 @@
 	<h1 style="text-align: center;">Search Booking</h1>
     <hr>
     <div class="container">
-
-        <card class="card mt-5">
+        <div class="card mt-5">
             <form:form action="/team5cab/${sessionScope.role}/booking/search" method="post" class="col-12 card-body needs-validation" modelAttribute="booking">
 				<div class="form-group">
-			<c:if test="${sessionScope.role == 'admin'}"	>
+				<c:if test="${sessionScope.role == 'admin'}"	>
                     <form:input type="text" class="form-control"  placeholder="User ID" required="required" path="users.userID" />
-              </c:if> 
+            	</c:if> 
                 </div>  
                 <div class="form-group">
                     <form:select path= "facility.facilityType.typeName" id="facility-type" class="form-control">
@@ -47,7 +46,6 @@
                     <form:input path="startDate" type="text" class="form-control" placeholder="Choose Start Date" />
                     <div class="input-group-addon" required="required">to</div>
                     <form:input path="endDate" type="text" class="form-control" placeholder="Choose Start Date" required="required"/>
-
                     <div id="validation-text" class="mb-3">
                     </div>
                 </div>
@@ -59,9 +57,9 @@
                     <button type="submit" class="btn btn-primary" onclick="">Search</button>
                 </div>
             </form:form>
-        </div>
-
-        <table id="search-booking-table" class="table table-hover">
+            </div>
+            
+			<table id="search-booking-table" class="table table-hover mt-5">
             <thead>
                 <tr>
                     
@@ -75,9 +73,9 @@
             <tbody>
             <c:forEach var="item" items="${bookings}">
                 <tr>
-                      <td class="align-middle">${item.facility.facilityType.typeName }</td>
-                    <td class="align-middle"><fmt:formatDate pattern="dd/MM/yyyy" value="${item.startDate}"/> </td>
-                    <td class="align-middle"><fmt:formatDate pattern="dd/MM/yyyy" value="${item.endDate}"/></td>
+                      <td class="align-middle">${item.facility.facilityName}</td>
+                    <td class="align-middle"><fmt:formatDate pattern="MM/dd/yyyy" value="${item.startDate}"/> </td>
+                    <td class="align-middle"><fmt:formatDate pattern="MM/dd/yyyy" value="${item.endDate}"/></td>
                     <td class="align-middle">${item.users.userID}</td>
                     <td class="align-middle">
                         <a href="<c:url value="/admin/booking/edit/${item.bookingID}" />" class="btn btn-secondary">Edit</a>
@@ -87,7 +85,7 @@
                 </c:forEach>
                 
                 </tbody>
-        </table>
+		</table>
     </div>
 
     <!-- Modal -->

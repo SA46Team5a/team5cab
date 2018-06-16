@@ -90,12 +90,6 @@ public class BookingController {
 		}
 		else{
 			Facility f = fService.findFacilityById(booking.getFacility().getFacilityID());
-
-			//String userID = session.getAttribute("userID").toString();
-			//String userID = "Abraham1234";
-	
-			// Get both objects from their respective id
-
 			booking.setFacility(f);
 			booking.setUsers(uService.findUser(userID));
 			if(booking.getEndDate()==null)
@@ -104,7 +98,6 @@ public class BookingController {
 			bService.createBooking(booking);
 			return new ModelAndView("booking-confirmation", "booking", booking);
 		}	
-
 	}
 	
 	@RequestMapping(value= {"/admin/booking/search", "/member/booking/search"},method=RequestMethod.GET)
@@ -114,12 +107,12 @@ public class BookingController {
 		
 		mav.addObject("booking",new Booking());
 		mav.addObject("listOfTypeName",ftService.findAllType());
-		//mav.addObject("listOfFacilityID",bService.findAllFacilityID());
+		mav.addObject("bookings", bService.findAllBooking());
 		mav.setViewName("booking-search");
 		return mav;
 	}
 	
-	@RequestMapping(value= {"/admin/booking/search","/member/booking/search"}, method=RequestMethod.POST)
+	@RequestMapping(value= {"/admin/booking/search", "/member/booking/search"}, method=RequestMethod.POST)
 	public ModelAndView displaySearchResult(@ModelAttribute("booking") Booking booking,HttpSession session )
 	{
 		
@@ -153,7 +146,14 @@ public class BookingController {
     {
 		Booking booking  = bService.findBookingByID(bookingID);
 		ModelAndView mav = new ModelAndView("booking-edit", "booking", booking);
-		
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		List<String> dateStrings= new ArrayList<String>();
+		for (Date date : bService.findUnavailableDates(booking.getFacility().getFacilityID())) {
+
+			dateStrings.add(df.format(date));
+		}
+		String dateString = StringUtils.collectionToDelimitedString(dateStrings, ",");
+		mav.addObject("availableDateList", dateString);
 		return mav;
     }
 
