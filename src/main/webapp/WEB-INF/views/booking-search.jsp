@@ -78,8 +78,15 @@
                     <td class="align-middle"><fmt:formatDate pattern="MM/dd/yyyy" value="${item.endDate}"/></td>
                     <td class="align-middle">${item.users.userID}</td>
                     <td class="align-middle">
-                        <a href="<c:url value="/admin/booking/edit/${item.bookingID}" />" class="btn btn-secondary">Edit</a>
-                    	<a href="<c:url value="/admin/booking/delete/${item.bookingID}" />" class="btn btn-danger">Cancel</a>
+                    	<c:choose>
+                    	<c:when test="${!item.isCancel}">
+							<a href="<c:url value="/admin/booking/edit/${item.bookingID}" />" class="btn btn-secondary">Edit</a>
+							<a href="<c:url value="/admin/booking/delete/${item.bookingID}" />" class="btn btn-danger">Cancel</a>
+                    	</c:when>
+						<c:otherwise>
+							<span class="text-muted">Expired</span>
+                    	</c:otherwise>
+                    	</c:choose>
                     </td>
                 </tr>
                 </c:forEach>

@@ -25,6 +25,7 @@ import sg.iss.team5cab.services.BookingService;
 import sg.iss.team5cab.services.FacilityServices;
 import sg.iss.team5cab.services.FacilityTypeService;
 import sg.iss.team5cab.services.UsersService;
+import utils.CABDate;
 
 @Controller
 public class BookingController {
@@ -107,7 +108,13 @@ public class BookingController {
 		ModelAndView mav=new ModelAndView();
 		mav.addObject("booking",new Booking());
 		mav.addObject("listOfTypeName",ftService.findAllType());
-		mav.addObject("bookings", bService.findAllBooking());
+		List<Booking> bookings = bService.findAllBooking();
+		for (Booking booking: bookings) {
+			if (booking.getStartDate().before(CABDate.getToday()) ) {
+				booking.setIsCancel(true);
+			}
+		}
+		mav.addObject("bookings", bookings);
 		mav.setViewName("booking-search");
 		return mav;
 	}
@@ -146,14 +153,17 @@ public class BookingController {
     {
 		Booking booking  = bService.findBookingByID(bookingID);
 		ModelAndView mav = new ModelAndView("booking-edit", "booking", booking);
+
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		List<String> dateStrings= new ArrayList<String>();
-		for (Date date : bService.findUnavailableDates(booking.getFacility().getFacilityID())) {
 
+		for (Date date : bService.findUnavailableDates(booking.getFacility().getFacilityID())) {
 			dateStrings.add(df.format(date));
 		}
 		String dateString = StringUtils.collectionToDelimitedString(dateStrings, ",");
+
 		mav.addObject("availableDateList", dateString);
+		mav.addObject("today", CABDate.getToday());
 		return mav;
     }
 
