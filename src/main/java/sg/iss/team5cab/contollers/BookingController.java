@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import sg.iss.team5cab.model.Booking;
 import sg.iss.team5cab.model.Facility;
@@ -104,7 +105,6 @@ public class BookingController {
 	public ModelAndView createSearchPage()
 	{
 		ModelAndView mav=new ModelAndView();
-		
 		mav.addObject("booking",new Booking());
 		mav.addObject("listOfTypeName",ftService.findAllType());
 		mav.addObject("bookings", bService.findAllBooking());
@@ -133,13 +133,13 @@ public class BookingController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/member/booking/search",method=RequestMethod.POST)
-	public ModelAndView displayMemberSearchResult(@ModelAttribute("booking") Booking booking)
-	{
-		ModelAndView mav=new ModelAndView();
-		mav.setViewName("booking-search");
-		return mav;
-	}
+//	@RequestMapping(value="/member/booking/search",method=RequestMethod.POST)
+//	public ModelAndView displayMemberSearchResult(@ModelAttribute("booking") Booking booking)
+//	{
+//		ModelAndView mav=new ModelAndView();
+//		mav.setViewName("booking-search");
+//		return mav;
+//	}
 	
 	@RequestMapping(value="/admin/booking/edit/{bookingID}",method = RequestMethod.GET)
     public ModelAndView editBooking(@PathVariable int bookingID)
@@ -158,23 +158,33 @@ public class BookingController {
     }
 
 	@RequestMapping(value="/admin/booking/edit",method = RequestMethod.POST)
-    public ModelAndView editBookingConfirmation(@ModelAttribute("booking") Booking updatedBooking)
+    public ModelAndView editBookingConfirmation(@ModelAttribute("booking") Booking updatedBooking,final RedirectAttributes redirectAttributes)
 
     {
-//		System.out.println(updatedBooking);
-		Booking oldBooking=bService.findBookingByID(updatedBooking.getBookingID());
 		
+		Booking oldBooking=bService.findBookingByID(updatedBooking.getBookingID());
 		oldBooking.setStartDate(updatedBooking.getStartDate());
 		oldBooking.setEndDate(updatedBooking.getEndDate());
-//		
-//		updatedBooking.setIsCancel(oldBooking.getIsCancel());
-//		//updatedBooking.setBookingID(oldBooking.getBookingID());
-//		updatedBooking.setFacility(oldBooking.getFacility());
-//		updatedBooking.setUnderMaintenance(oldBooking.getIsUnderMaintenance());
-//		updatedBooking.getUsers().setUserID(oldBooking.getUsers().getUserID());
+		String message="Booking clash found.";
+		if(bService.isBookingClash(oldBooking.getFacility().getFacilityID(), oldBooking.getStartDate(), oldBooking.getEndDate()))
+		{
+//			System.out.println(oldBooking);
+//			System.out.println("######################################");
+//			System.out.println(bService.isBookingClash(oldBooking.getFacility().getFacilityID(), oldBooking.getStartDate(), oldBooking.getEndDate()));
+//			System.out.println("####################################");
+			
+			ModelAndView mav=new ModelAndView("booking-edit","booking",updatedBooking);
+			mav.addObject("error","Booking clash has been found,please choose another date");
+			return mav;
+		}
+		else
+		{
+			System.out.println("@!@!@!@!@@!@!@!@!@!@!@!@!@@!");
 		
     	ModelAndView mav =new ModelAndView("booking-confirmation", "booking", bService.updateBooking(oldBooking));
        	return mav;
+		}
+		
     }
 	
 	@RequestMapping(value="/admin/booking/delete/{bookingID}",method=RequestMethod.GET)

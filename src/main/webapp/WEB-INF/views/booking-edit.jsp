@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="cab" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html5 PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -38,6 +39,9 @@
                 <div class="text-center">
                     <input type="submit" class="btn btn-primary mb-3" value="Update">
                 </div>
+                <c:if test="${not empty error}">
+                <div class="alert alert-success" >"${error}"</div>
+                </c:if>
             </form:form>
         </div>
 		<input hidden type="text" id="dateList" value="${availableDateList}" />

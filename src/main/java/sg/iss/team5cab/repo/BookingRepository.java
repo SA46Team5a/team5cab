@@ -19,7 +19,7 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 	@Query("SELECT b FROM Booking b WHERE b.endDate <=:endDate AND"
 			+ " b.startDate>=:startDate	 AND b.facility.facilityType.typeName=:typeName AND b.users.userID=:uID AND b.isCancel=false")
 	List<Booking> findBookingByTypeName(@Param("startDate") Date startDate, @Param("endDate") Date endDate,@Param("typeName") String typeName ,@Param("uID") String uID);
-	
+		
 	@Query("Select b from Booking b where b.facility.facilityID=:fid") //where b.facilityID = f.facilityID
 	List<Booking> findBookingsByFacilityID(@Param("fid") int fid); 
 	
