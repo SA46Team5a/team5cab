@@ -23,10 +23,10 @@
         <div class="card mt-5">
             <c:if test="${param.bookingWarning==\"true\"}">
             	<div class="alert alert-danger" role="alert">
-			 	Sorry! The dates you selected have an existing booking.Please try for other dates!
-			</div>
+					 Sorry! The dates you selected have an existing booking. Please try for other dates!
+				</div>
             </c:if>
-            <form:form action="team5cab/${sessionScope.role}/booking/create" method="post" class="col-12 card-body" modelAttribute="booking">
+            <form:form id="bookingForm" action="team5cab/${sessionScope.role}/booking/create" method="post" class="col-12 card-body" modelAttribute="booking">
                 <div class="input-group mb-3">
                     <form:hidden path="facility.facilityID" />
                     <input type="text" class="form-control" name="facilityName" value="${booking.facility.facilityName}" disabled />
@@ -43,7 +43,7 @@
                     <form:input type="text" class="form-control" id="endDate" placeholder="Choose End Date" path="endDate" />
                 </div>
                 <div class="text-center">
-                    <button id="submit" type="submit" class="btn btn-primary mb-3">Book</button>
+                    <button id="submit" type="submit" class="btn btn-primary mb-3" disabled>Book</button>
                 </div>
                 <div class="text-center">             
                 </div> 
@@ -53,68 +53,59 @@
     </div>
 </body>
 
-    <script>
-        var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-        var maxDate = new Date();
-        maxDate.setDate(today.getDate() + 7);
-        var dateList = $('#dateList').val().split(",");
-        
-        function padLeft(num, size) {
-            var s = num+"";
-            while (s.length < size) s = "0" + s;
-            return s;
-        }
-        
-        function stringToDate(str) {
-        	var dateArray = new Array();
-        	str.split("/").forEach(function (s) {
-        		dateArray.push(parseInt(s));	
-        	});
-        	// Date in MM/dd/yyyy format
-        	var x = new Date(
-				dateArray[2],
-				dateArray[0] - 1,
-				dateArray[1],
-				0,0,0,0
-        	);
-        	return x;
-        }
-        
-        function dateToString(date) {
-        	return padLeft(date.getMonth() + 1,2) + "/" + padLeft(date.getDate() ,2) + "/" + date.getFullYear();
-        }
-        
-        function getMaxDate() {
-        	var dateString = $('#startDate').val();
-        	var cDate = stringToDate(dateString);
-        	do  {
-        		cDate.setDate(cDate.getDate() + 1);
-        		dateString = dateToString(cDate);
-        	} while (dateList.indexOf(dateString) == -1 && cDate.getTime() < maxDate.getTime());
-        	console.log(dateString);
-        	return dateString;
-        }	
-        
-        $('#startDate').datepicker({
-            uiLibrary: 'bootstrap4',
-            iconsLibrary: 'fontawesome',
-            minDate: today,
-            maxDate: maxDate,
-            disableDates:
-            	dateList
-        });
-        
-        $('#startDate').change( function () {
-        	$('#endDate').val($('#startDate').val());
-        });
+<script>
+	var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+	var maxDate = new Date();
+	maxDate.setDate(today.getDate() + 7);
+	var dateList = $('#dateList').val().split(",");
+	
+	function padLeft(num, size) {
+		var s = num+"";
+		while (s.length < size) s = "0" + s;
+		return s;
+	}
+	
+	function stringToDate(str) {
+		var dateArray = new Array();
+		str.split("/").forEach(function (s) {
+			dateArray.push(parseInt(s));	
+		});
+		// Date in MM/dd/yyyy format
+		var x = new Date(
+			dateArray[2],
+			dateArray[0] - 1,
+			dateArray[1],
+			0,0,0,0
+		);
+		return x;
+	}
+	
+	function dateToString(date) {
+		return padLeft(date.getMonth() + 1,2) + "/" + padLeft(date.getDate() ,2) + "/" + date.getFullYear();
+	}
+	
+	$('#startDate').datepicker({
+		uiLibrary: 'bootstrap4',
+		iconsLibrary: 'fontawesome',
+		minDate: today,
+		maxDate: maxDate,
+		disableDates:
+			dateList
+	});
+	
+	$('#startDate').change( function () {
+		$('#endDate').val($('#startDate').val());
+		if ($('#startDate').val() == '') 
+			$('#submit').prop("disabled", true);		
+		else
+			$('#submit').prop("disabled", false);
+	});
 
-        $('#endDate').datepicker({
-            uiLibrary: 'bootstrap4',
-            iconsLibrary: 'fontawesome',
-            minDate: today,
- 			maxDate: maxDate,
- 			disableDates:
-            	dateList
-        });
-
-    </script>
+	$('#endDate').datepicker({
+		uiLibrary: 'bootstrap4',
+		iconsLibrary: 'fontawesome',
+		minDate: today,
+		maxDate: maxDate,
+		disableDates: dateList
+	});
+</script>
