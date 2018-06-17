@@ -78,8 +78,8 @@
                     <td class="align-middle">
                     	<c:choose>
                     	<c:when test="${!item.isCancel}">
-							<a href="<c:url value="/admin/booking/edit/${item.bookingID}" />" class="btn btn-secondary">Edit</a>
-							<a href="<c:url value="/admin/booking/delete/${item.bookingID}" />" class="btn btn-danger">Cancel</a>
+							<a href="<c:url value="/${sessionScope.role}/booking/edit/${item.bookingID}" />" class="btn btn-secondary">Edit</a>
+							<a href="<c:url value="/${sessionScope.role}/booking/delete/${item.bookingID}" />" class="btn btn-danger">Cancel</a>
                     	</c:when>
 						<c:otherwise>
 							<span class="text-muted">Expired</span>
