@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import sg.iss.team5cab.model.Booking;
 import sg.iss.team5cab.model.Facility;
+import sg.iss.team5cab.model.FacilityType;
 import sg.iss.team5cab.model.Users;
 import sg.iss.team5cab.services.BookingService;
 import sg.iss.team5cab.services.FacilityServices;
@@ -125,13 +126,14 @@ public class BookingController {
 		
 		ModelAndView mav=new ModelAndView();
 		List<Booking> listBookings=null;
+		String typeName = booking.getFacility() == null ? null: booking.getFacility().getFacilityType().getTypeName();
 		if(session.getAttribute("role").equals("member"))
 		{
-			listBookings=bService.findBookingByTypeName(booking.getFacility().getFacilityType().getTypeName(), booking.getStartDate(), booking.getEndDate(), session.getAttribute("userID").toString());
+			listBookings=bService.findBookingByTypeName(typeName, booking.getStartDate(), booking.getEndDate(), session.getAttribute("userID").toString());
 		}
 		else if(session.getAttribute("role").equals("admin"))
 		{	
-			listBookings=bService.findBookingByTypeName(booking.getFacility().getFacilityType().getTypeName(), booking.getStartDate(), booking.getEndDate(), booking.getUsers().getUserID());
+			listBookings=bService.findBookingByTypeName(typeName, booking.getStartDate(), booking.getEndDate(), booking.getUsers().getUserID());
 		}	
 		
 		mav.addObject("bookings",listBookings);

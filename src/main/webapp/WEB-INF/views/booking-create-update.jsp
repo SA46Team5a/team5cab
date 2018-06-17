@@ -32,7 +32,7 @@
                     <form:hidden path="facility.facilityID" />
                     <input type="text" class="form-control" name="facilityName" value="${booking.facility.facilityName}" disabled />
                     <form:hidden path="users.userID" />
-                    <c:if test="${sessionScope.role ==\"Admin\"}" >
+                    <c:if test='${sessionScope.role =="admin"}' >
                      	 <label class="form-check-label ml-5 pt-1">
                         <form:checkbox path="isUnderMaintenance" class="form-check-input" value=""/>For Maintenance
                     	</label>	

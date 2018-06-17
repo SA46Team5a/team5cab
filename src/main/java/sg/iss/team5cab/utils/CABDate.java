@@ -28,4 +28,8 @@ public class CABDate {
 	public static Date plusDays(Date date, int numberOfDays) {
 		return Date.from((getLocalDateTime(date).plusDays(numberOfDays)).toInstant(OffsetDateTime.now().getOffset()));
 	}
+	
+	public static Date plusYears(Date date, int numberOfYears) {
+		return Date.from((getLocalDateTime(date).plusYears(numberOfYears)).toInstant(OffsetDateTime.now().getOffset()));
+	}
 }

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import sg.iss.team5cab.model.Booking;
 import sg.iss.team5cab.model.Facility;
+import sg.iss.team5cab.model.FacilityType;
 import sg.iss.team5cab.repo.BookingRepository;
 import sg.iss.team5cab.repo.FacilityRepository;
 import sg.iss.team5cab.utils.CABDate;
@@ -235,9 +236,14 @@ public class BookingServicesImpl implements BookingService {
 	}
 	@Override
 	@Transactional
-	public List<Booking> findBookingByTypeName(String typeName,Date start,Date end,String uID)
+	public List<Booking> findBookingByTypeName(String ft, Date start,Date end,String uID)
 	{
-		return bRepo.findBookingByTypeName(start, end, typeName, uID);
+		if (start == null) start = new Date(0L);
+		if (end == null) end = CABDate.plusYears(CABDate.getToday(), 5);
+		if (ft == null)
+			return bRepo.findBookingByDates(start, end, uID);
+		else
+			return bRepo.findBookingByTypeName(start, end, ft, uID);
 	}
 	
 	public ArrayList<Date> BookingDatesToDateList(List<Booking> bookings) {

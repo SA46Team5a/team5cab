@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import sg.iss.team5cab.model.Booking;
 import sg.iss.team5cab.model.Facility;
+import sg.iss.team5cab.model.FacilityType;
 
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
 	@Query("SELECT b FROM Booking b WHERE b.endDate <=:endDate AND"
@@ -17,8 +18,13 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 			@Param("fID") int fID,@Param("uID") String uID);
 	
 	@Query("SELECT b FROM Booking b WHERE b.endDate <=:endDate AND"
+			+ " b.startDate>=:startDate	AND b.users.userID=:uID AND b.isCancel=false")
+	List<Booking> findBookingByDates(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("uID") String uID);
+	
+	
+	@Query("SELECT b FROM Booking b WHERE b.endDate <=:endDate AND"
 			+ " b.startDate>=:startDate	 AND b.facility.facilityType.typeName=:typeName AND b.users.userID=:uID AND b.isCancel=false")
-	List<Booking> findBookingByTypeName(@Param("startDate") Date startDate, @Param("endDate") Date endDate,@Param("typeName") String typeName ,@Param("uID") String uID);
+	List<Booking> findBookingByTypeName(@Param("startDate") Date startDate, @Param("endDate") Date endDate,@Param("typeName") String ft ,@Param("uID") String uID);
 		
 	@Query("Select b from Booking b where b.facility.facilityID=:fid") //where b.facilityID = f.facilityID
 	List<Booking> findBookingsByFacilityID(@Param("fid") int fid); 
