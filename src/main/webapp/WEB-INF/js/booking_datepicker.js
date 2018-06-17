@@ -38,11 +38,18 @@
 	});
 	
 	$('#startDate').change( function () {
-		$('#endDate').val($('#startDate').val());
+		var startDate = $('#startDate').val();
+		$('#endDate').val(startDate);
 		if ($('#startDate').val() == '') 
 			$('#submit').prop("disabled", true);		
+		else if (stringToDate(startDate).getTime() < today.getTime()) {
+			$('#startDate').val(dateToString(today));
+			$('#endDate').val(dateToString(today));
+		}
 		else
 			$('#submit').prop("disabled", false);
+		
+		
 	});
 
 	$('#endDate').datepicker({
@@ -52,3 +59,11 @@
 		maxDate: maxDate,
 		disableDates: dateList
 	});
+	
+	$('#endDate').change( function () {
+		var endDate = $('#endDate').val();
+		var startDate = $('#startDate').val();
+		if (endDate != '' && stringToDate(endDate).getTime() < stringToDate(startDate).getTime())
+			$('#endDate').val(startDate);
+	});
+	
