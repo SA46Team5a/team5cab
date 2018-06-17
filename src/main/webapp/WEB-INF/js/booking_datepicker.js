@@ -52,7 +52,3 @@
 		maxDate: maxDate,
 		disableDates: dateList
 	});
-	
-
-	$('#startDate').prop("disabled", true);
-	$('#endDate').prop("disabled", true);

@@ -3,5 +3,3 @@
 		iconsLibrary: 'fontawesome',
 		maxDate: new Date()
 	});
-	
-	$('#birthday').prop("disabled", true);
