@@ -148,7 +148,7 @@ public class BookingController {
 //		return mav;
 //	}
 	
-	@RequestMapping(value="/admin/booking/edit/{bookingID}",method = RequestMethod.GET)
+	@RequestMapping(value= {"/admin/booking/edit/{bookingID}", "/member/booking/edit/{bookingID}"},method = RequestMethod.GET)
     public ModelAndView editBooking(@PathVariable int bookingID)
     {
 		Booking booking  = bService.findBookingByID(bookingID);
@@ -167,16 +167,15 @@ public class BookingController {
 		return mav;
     }
 
-	@RequestMapping(value="/admin/booking/edit",method = RequestMethod.POST)
-    public ModelAndView editBookingConfirmation(@ModelAttribute("booking") Booking updatedBooking,final RedirectAttributes redirectAttributes)
-
+	@RequestMapping(value= {"/admin/booking/edit", "/member/booking/edit"},method = RequestMethod.POST)
+    public ModelAndView editBookingConfirmation(@ModelAttribute("booking") Booking updatedBooking,final RedirectAttributes redirectAttributes, HttpSession session)
     {
 		Booking oldBooking=bService.findBookingByID(updatedBooking.getBookingID());
 		oldBooking.setStartDate(updatedBooking.getStartDate());
 		oldBooking.setEndDate(updatedBooking.getEndDate());
 		if(bService.isBookingClash(oldBooking.getFacility().getFacilityID(), oldBooking.getStartDate(), oldBooking.getEndDate()))
 		{
-			ModelAndView mav=new ModelAndView("redirect:/admin/booking/edit/" + oldBooking.getBookingID());
+			ModelAndView mav=new ModelAndView("redirect:/" + session.getAttribute("role") + "/booking/edit/" + oldBooking.getBookingID());
 			mav.addObject("bookingWarning", true);
 			return mav;
 		}
@@ -187,15 +186,11 @@ public class BookingController {
 		}
     }
 	
-	@RequestMapping(value="/admin/booking/delete/{bookingID}",method=RequestMethod.GET)
-	public ModelAndView deleteBooking(@PathVariable int bookingID)
+	@RequestMapping(value= {"/admin/booking/delete/{bookingID}", "/member/booking/delete/{bookingID}"},method=RequestMethod.GET)
+	public ModelAndView deleteBooking(@PathVariable int bookingID, HttpSession session)
 	{
 		Booking book=bService.findBookingByID(bookingID);
 		bService.deleteBooking(bookingID);
-		return new ModelAndView("redirect:/admin/booking/search");
+		return new ModelAndView("redirect:/" + session.getAttribute("role") + "/booking/search");
 	}
-	
-
-	
-
 }

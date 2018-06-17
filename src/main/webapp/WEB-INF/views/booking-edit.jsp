@@ -26,7 +26,7 @@
 					 Sorry! The dates you selected are already booked. Please try for other dates!
 				</div>
             </c:if>
-            <form:form action="team5cab/admin/booking/edit" method="post" modelAttribute="booking" class="col-12 card-body">
+            <form:form action="team5cab/${sessionScope.role}/booking/edit" method="post" modelAttribute="booking" class="col-12 card-body">
                 <div class="input-group mb-3">
                 	
                     <input value="${booking.facility.facilityName}" type="text" class="form-control" aria-label="Facility Name" aria-describedby="InputGroup-sizing-default" 
