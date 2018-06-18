@@ -99,8 +99,7 @@
 	- User can choose to continue make the booking by click "Back to Create Booking" button or go back to home page by click "Home" button.
 
 ###Features in each Page
-
--"Welcome page" 
+- "Welcome page" 
 	- 1.menu option for users will only be enable at admin login
 	- 2.menu option for Booking only be enable at member login and admin login.
 
@@ -122,7 +121,7 @@
 ## Known Bugs
 
 ## GitHub
-- [gijgo Github team5cabRepository]https://github.com/SA46Team5a/team5cab
+- [Github team5cabRepository](https://github.com/SA46Team5a/team5cab)
 
 ## Closing thoughts
 In addition to fulfilling the requirements set out by the project, we wanted to achieve the following:
