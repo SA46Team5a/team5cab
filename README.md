@@ -99,24 +99,25 @@
 	- User can choose to continue make the booking by click "Back to Create Booking" button or go back to home page by click "Home" button.
 
 ###Features in each Page
-"Welcome page" 
-1.menu option for users will only be enable at admin login
-2.menu option for Booking only be enable at member login and admin login.
 
-"Search facility"
-1.admin can book for maintenance, edit and delete facility in this page.
+-"Welcome page" 
+	- 1.menu option for users will only be enable at admin login
+	- 2.menu option for Booking only be enable at member login and admin login.
 
-"Search booking"
-1.for member login, the "userID input" will be disabled
-2.for admin login, the "userID input" will be enabled thus admin can search booking records by userID and start end dates.
-3.they can edit and cancel the booking record
-4.the booking record before today will be displayed as Expired
+-"Search facility"
+	- 1.admin can book for maintenance, edit and delete facility in this page.
 
-"Add user"
-1.all the field can not be null
-2.email address must follow the email format
-3.phone number must be start with 8 or 9 and must be 8 digits
-4.birthday must be before today
+-"Search booking"
+	- 1.for member login, the "userID input" will be disabled
+	- 2.for admin login, the "userID input" will be enabled thus admin can search booking records by userID and start end dates.
+	- 3.they can edit and cancel the booking record
+	- 4.the booking record before today will be displayed as Expired
+
+- "Add user"
+	- 1.all the field can not be null
+	- 2.email address must follow the email format
+	- 3.phone number must be start with 8 or 9 and must be 8 digits
+	- 4.birthday must be before today
 
 ## Known Bugs
 
