@@ -55,7 +55,19 @@
 ### Server setup
 - No additional steps required for running the server.
 
-### Login Information
+## User Guide
+### homepage
+- /team5cab/welcome
+
+### User access rights
+- Public: Can search for facilities (will be redirected to login when "Book" is clicked when browsing facilities)
+		  Can register as new user
+- Member: Can search for facilities
+		  Can book facilities 
+		  Search for bookings tied to own account
+- Admin:  Can edit facility 
+
+### Login information
 - Trial Member Account:
 	- UserID: Abraham1234
 	- Password: rQnYRz3L
@@ -65,11 +77,17 @@
 
 ## Known Bugs
 
+## GitHub
+- [gijgo Github team5cabRepository]https://github.com/SA46Team5a/team5cab
+
 ## Closing thoughts
 In addition to fulfilling the requirements set out by the project, we wanted to achieve the following:
 - To allow each team member to identify and explore the areas of development they are interested in.
 - To focus on mastering the basic concepts.
 
 To meet the above, we designed the system such that it just meets the key requirements of the project without additional functions, so that every member can have more time mastering the basics in their assigned components.
+
+try for Test Driven Development for the next project.
+
 
 
