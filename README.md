@@ -55,6 +55,14 @@
 ### Server setup
 - No additional steps required for running the server.
 
+### Login Information
+- Trial Member Account:
+	- UserID: Abraham1234
+	- Password: rQnYRz3L
+- Trial Admin Account:
+	- UserID: Antoinette1234
+	- Password: jGxqBeBX
+
 ## Known Bugs
 
 ## Closing thoughts
