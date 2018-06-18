@@ -1,4 +1,6 @@
-	function stringToDate(str) {
+var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());	
+
+function stringToDate(str) {
 		var dateArray = new Array();
 		str.split("/").forEach(function (s) {
 			dateArray.push(parseInt(s));	
