@@ -19,11 +19,20 @@
 	});
 	
 	$('#startDate').change( function () {
-		$('#endDate').val($('#startDate').val());
+		var startDate = $('#startDate').val();
+		$('#endDate').val(startDate);
 		if ($('#startDate').val() == '') 
 			$('#submit').prop("disabled", true);		
-		else
+		else if (stringToDate(startDate).getTime() < today.getTime()) {
+			$('#startDate').val(dateToString(today));
+			$('#endDate').val(dateToString(today));
 			$('#submit').prop("disabled", false);
+		}
+		if (isNaN(stringToDate(startDate))){
+			$('#startDate').val("");
+			$('#endDate').val("");
+			$('#submit').prop("disabled", true);
+		}
 	});
 
 	$('#endDate').datepicker({
@@ -31,9 +40,15 @@
 		iconsLibrary: 'fontawesome',
 	});
 	
+	
 	$('#endDate').change( function () {
 		var endDate = $('#endDate').val();
 		var startDate = $('#startDate').val();
 		if (endDate != '' && stringToDate(endDate).getTime() < stringToDate(startDate).getTime())
 			$('#endDate').val(startDate);
-	});	
+			$('#submit').prop("disabled", false);
+		if (isNaN(stringToDate(endDate))){
+			$('#endDate').val("");
+			$('#submit').prop("disabled", true);
+		}
+	});

@@ -35,4 +35,7 @@ $('#birthday').change(function () {
 	var birthday = $('#birthday').val();
 	if (birthday != '' && stringToDate(birthday).getTime() > today.getTime())
 		$('#birthday').val(dateToString(today));
+	else if (isNaN(stringToDate(birthday))){
+		$('#birthday').val("");
+	}
 });
